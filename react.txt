@@ -46,6 +46,6 @@ rafce
 
 
 now for   const [first, setfirst] = useState(second)
-step1:type "use" and then enter
+step1:type "uses" and then enter
 step2:type "s" after it and it willl happen
 
