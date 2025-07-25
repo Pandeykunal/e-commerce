@@ -1,0 +1,51 @@
+PS C:\Users\student\Desktop\fs085> npm create vite@latest
+create-vite@7.0.3
+Ok to proceed? (y) y
+
+
+> npx
+> create-vite
+
+│
+◇  Project name:
+│  e-commerce_react
+│
+◇  Select a framework:
+│  React
+│
+◇  Select a variant:
+│  JavaScript
+│
+◇  Scaffolding project in C:\Users\student\Desktop\fs085\e-commerce_react...
+│
+└  Done. Now run:
+
+  cd e-commerce_react
+  npm install
+  npm run dev
+
+PS C:\Users\student\Desktop\fs085>   cd e-commerce_react
+PS C:\Users\student\Desktop\fs085\e-commerce_react>  npm install
+
+added 152 packages, and audited 153 packages in 8s
+
+33 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+
+
+
+eextensions 
+es7 search krk
+
+
+shortcut for snippet in app.jsx
+rafce
+
+
+now for   const [first, setfirst] = useState(second)
+step1:type "use" and then enter
+step2:type "s" after it and it willl happen
+
