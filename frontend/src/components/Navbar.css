@@ -1,0 +1,14 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.search input {
+  padding: 5px 10px;
+}
+
+.right i {
+  cursor: pointer;
+}

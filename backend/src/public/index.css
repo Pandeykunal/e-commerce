@@ -1,0 +1,93 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  color: #222;
+  padding: 20px;
+}
+
+/* Navigation */
+nav {
+  background-color: #1e90ff;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+/* Product card container */
+.prod {
+  width: 280px;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  margin: 15px;
+  display: inline-block;
+  vertical-align: top;
+  transition: transform 0.2s ease;
+}
+
+.prod:hover {
+  transform: scale(1.02);
+}
+
+/* Image section */
+.top img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Product info */
+.bottom {
+  padding: 15px;
+}
+
+.bottom h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.bottom p {
+  font-size: 15px;
+  color: #555;
+  margin: 4px 0;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 768px) {
+  .prod {
+    width: 90%;
+    margin: 10px auto;
+    display: block;
+  }
+
+  .nav-link {
+    font-size: 18px;
+  }
+
+  .bottom h2 {
+    font-size: 18px;
+  }
+}

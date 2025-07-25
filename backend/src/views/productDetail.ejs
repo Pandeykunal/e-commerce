@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/productDetail.css">
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-link">⬅ Back to Home</a>
+  </nav>
+
+  <div class="product-detail">
+    <div class="image-section">
+      <% if (product.image) { %>
+        <img src="<%= product.image %>" alt="<%= product.title %>" />
+      <% } else { %>
+        <p>No image available</p>
+      <% } %>
+    </div>
+
+    <div class="info-section">
+      <h1><%= product.title %></h1>
+      <p><strong>Description:</strong> <%= product.description %></p>
+      <p><strong>Category:</strong> <%= product.category %></p>
+      <p><strong>Price:</strong> ₹<%= product.price %></p>
+
+      <div class="actions">
+        <a href="/product/<%= product._id %>/edit"><button class="edit-btn">UPDATE</button></a>
+
+        <form action="/product/<%= product._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure?')">
+          <button type="submit" class="delete-btn">DELETE</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
