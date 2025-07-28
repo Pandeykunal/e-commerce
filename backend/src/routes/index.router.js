@@ -1,22 +1,27 @@
-const express=require("express")
-const productModel =require("../models/product.model")
-const { route } = require("./product.router")
-const router =express.Router()
+const express = require("express");
+const productModel = require("../models/product.model");
 
+const router = express.Router();
 
-router.use((req,res,next)=>{
-    req.name="player"
-    next()
-})
-router.get('/', async(req,res)=>{
-    const products = await productModel.find()
-    console.log("products: ", products);
-    console.log(req.name);
-    
+// Middleware to add a custom property to request
+router.use((req, res, next) => {
+    req.name = "player";
+    next();
+});
 
-    res.render("index", {products: products, title: "Home Page"})
-})
+// GET all products
+router.get("/", async (req, res) => {
+    try {
+        const products = await productModel.find();
+        res.status(200).json({ 
+            message: 'Data found', 
+            data: products,
+            requestedBy: req.name 
+        });
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
 
-
-
-module.exports=router
+module.exports = router;

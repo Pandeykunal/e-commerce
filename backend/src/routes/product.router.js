@@ -4,20 +4,21 @@ const multer = require("multer");
 const ImageKit = require("imagekit");
 const router = express.Router();
 
+// Setup Multer for file uploads in memory
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+// ImageKit config — make sure keys are correct and secret keys are never exposed publicly
 const imagekit = new ImageKit({
-  publicKey: "your-public-key",
-  privateKey: "your-private-key",
-  urlEndpoint: "https://ik.imagekit.io/your-folder",
+  publicKey: "public_pLadTxKfr4W3ntpIjIezmjVvYTA=",
+  privateKey: "private_sTJEmkbnIX2Ysj3+Lhb0bLwGMW8=",
+  urlEndpoint: "https://ik.imagekit.io/pxkhoaxnr",
 });
 
-// Create product
+// CREATE new product with image upload
 router.post("/add", upload.single("image"), async (req, res) => {
   try {
-    const { title, description, category, price } = req.body;
-
+    const { title, category, price, description } = req.body;
     const uploadedImage = await imagekit.upload({
       file: req.file.buffer,
       fileName: req.file.originalname,
@@ -25,21 +26,21 @@ router.post("/add", upload.single("image"), async (req, res) => {
 
     const product = new productModel({
       title,
-      description,
       category,
       price,
+      description,
       image: uploadedImage.url,
     });
 
     await product.save();
     res.status(201).json({ message: "Product saved", product });
   } catch (err) {
-    console.error("Error saving product:", err);
-    res.status(500).json({ error: "Error uploading product" });
+    console.error("Error uploading image or saving product:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-// Get all products
+// READ all products
 router.get("/", async (req, res) => {
   try {
     const products = await productModel.find();
@@ -49,23 +50,22 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get product by ID
+// READ product by ID
 router.get("/:id", async (req, res) => {
   try {
     const product = await productModel.findById(req.params.id);
     if (!product) return res.status(404).json({ error: "Product not found" });
-
     res.json(product);
   } catch (err) {
     res.status(500).json({ error: "Error fetching product" });
   }
 });
 
-// Update product
+// UPDATE product by ID, optional new image upload
 router.put("/:id", upload.single("image"), async (req, res) => {
   try {
-    const { title, description, category, price } = req.body;
-    const updatedData = { title, description, category, price };
+    const { title, category, price, description } = req.body;
+    const updatedData = { title, category, price, description };
 
     if (req.file) {
       const uploadedImage = await imagekit.upload({
@@ -76,16 +76,20 @@ router.put("/:id", upload.single("image"), async (req, res) => {
     }
 
     const updated = await productModel.findByIdAndUpdate(req.params.id, updatedData, { new: true });
+    if (!updated) return res.status(404).json({ error: "Product not found" });
+
     res.json({ message: "Product updated", updated });
   } catch (err) {
+    console.error("Error updating product:", err);
     res.status(500).json({ error: "Error updating product" });
   }
 });
 
-// Delete product
+// DELETE product by ID
 router.delete("/:id", async (req, res) => {
   try {
-    await productModel.findByIdAndDelete(req.params.id);
+    const deleted = await productModel.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: "Product not found" });
     res.json({ message: "Product deleted" });
   } catch (err) {
     res.status(500).json({ error: "Error deleting product" });

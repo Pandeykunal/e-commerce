@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
-import './App.css';
-import Navbar from './components/Navbar';
-import ProductForm from './components/ProductForm/ProductForm';
-import Login from './components/Login/Login';
+import React from "react";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import ProductForm from "./components/ProductForm/ProductForm";
+import Login from "./components/Login/Login";
+import Home from "./components/Home/Home";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
+import EditProduct from "./components/EditProduct/EditProduct"; // ✅ NEW IMPORT
+
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-
-  const toggleForm = () => setShowForm(prev => !prev);
-  const toggleLogin = () => setShowLogin(prev => !prev);
-
   return (
     <div>
-      <Navbar onCartClick={toggleForm} onLoginClick={toggleLogin} />
-      {showForm && <ProductForm />}
-      {showLogin && <Login />}
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product" element={<ProductForm />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/product/edit/:id" element={<EditProduct />} /> {/* ✅ NEW ROUTE */}
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </div>
   );
 };

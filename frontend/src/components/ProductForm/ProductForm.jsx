@@ -1,73 +1,114 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./ProductForm.css";
 
 const ProductForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setImagePreview(null);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const productData = {
-      title,
-      description,
-      image,
-      category,
-      price
-    };
 
-    console.log("Submitted product:", productData);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("category", category);
+    formData.append("price", price);
 
-    // You could send `productData` to a backend here
+    try {
+      const res = await axios.post("http://localhost:5000/api/products/add", formData);
+      console.log("✅ Product added:", res.data);
+      alert("Product added successfully!");
+      // Reset form if needed
+      setTitle("");
+      setDescription("");
+      setImage(null);
+      setImagePreview(null);
+      setCategory("");
+      setPrice("");
+    } catch (err) {
+      console.error("❌ Error uploading product:", err);
+      alert("Error adding product");
+    }
   };
 
   return (
     <div className="form-container">
-      <h2>Add Product</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Title</label>
+      <h1>ADD NEW PLAYER</h1>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <label htmlFor="title">Title</label>
         <input
           type="text"
+          id="title"
+          placeholder="Enter title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
 
-        <label>Description</label>
+        <label htmlFor="img">Image</label>
+        <input
+          type="file"
+          id="img"
+          accept="image/*"
+          onChange={handleImageChange}
+          required
+        />
+        {imagePreview && (
+          <img
+            src={imagePreview}
+            alt="Image Preview"
+            style={{ width: "100px", height: "auto", borderRadius: "5px", marginTop: "10px" }}
+          />
+        )}
+
+        <label htmlFor="desc">Description</label>
         <input
           type="text"
+          id="desc"
+          placeholder="Enter description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
         />
 
-        <label>Image</label>
-        <input
-          type="file"
-          onChange={(e) => setImage(e.target.files[0])}
-          required
-        />
-
-        <label>Category</label>
+        <label htmlFor="cat">Category</label>
         <input
           type="text"
+          id="cat"
+          placeholder="Enter category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
         />
 
-        <label>Price</label>
+        <label htmlFor="price">Price</label>
         <input
           type="number"
+          id="price"
+          placeholder="Enter price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
         />
 
-        <button type="submit">Add Product</button>
+        <button type="submit">Add Player</button>
       </form>
     </div>
   );

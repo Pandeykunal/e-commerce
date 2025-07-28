@@ -49,3 +49,5 @@ now for   const [first, setfirst] = useState(second)
 step1:type "uses" and then enter
 step2:type "s" after it and it willl happen
 
+snippped for use efect
+1.) usee then enter then press s and enter 
