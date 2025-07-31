@@ -6,13 +6,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="left">
-        {/* Logo image */}
-        <img
-          src="https://www.shutterstock.com/image-vector/cricket-club-player-logo-vector-600nw-2417731251.jpg"
-          alt="Logo"
-          className="logo"
-        />
-        <h2>CRICKET SHOPYYYYY!!!!!</h2>
+        <h2>Shopkart</h2>
       </div>
 
       <div className="search">
@@ -20,12 +14,18 @@ const Navbar = () => {
       </div>
 
       <div className="right">
+        {/* Home Button */}
         <Link to="/" className="home-btn">Home</Link>
 
-        <Link to="/product" title="Add Product">
-          <i className="ri-shopping-cart-line"></i>
+        {/* Switched: Styled Add to Cart Button (was icon before) */}
+        <Link to="/product" className="add-cart-alt">Add Product</Link>
+
+        {/* Switched: Icon version of second Add to Cart */}
+        <Link to="/user-cart" title="Cart">
+          <i className="ri-shopping-cart-line cart-icon-alt"></i>
         </Link>
 
+        {/* Login Icon */}
         <Link to="/login" title="Login">
           <i className="ri-user-line"></i>
         </Link>
@@ -34,4 +34,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar;  

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import "./ProductDetails.css";
+import "../ProductDetails/ProductDetails.css";
 
-const ProductDetails = () => {
+const UserProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -27,24 +27,23 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-    if (!confirmDelete) return;
-
+  const handleAddToCart = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
-      alert("Product deleted successfully");
-      navigate("/"); // Redirect to home after deletion
+      const userId = "shubh001"; // 🔁 Hardcoded for now
+      await axios.post("http://localhost:5000/api/cart/add", {
+        userId,
+        productId: product._id,
+      });
+      alert("Product added to cart!");
     } catch (err) {
-      alert("Error deleting product");
       console.error(err);
+      alert("Failed to add to cart");
     }
   };
 
-  const handleUpdate = () => {
-  navigate(`/product/edit/${id}`); // ✅ match this with App.jsx
-};
-
+  const handleBuyNow = () => {
+    alert("Buy Now clicked. Implement checkout logic here.");
+  };
 
   if (loading) return <p>Loading product details...</p>;
   if (error) return <p>{error}</p>;
@@ -52,6 +51,12 @@ const ProductDetails = () => {
 
   return (
     <div>
+      <nav>
+        <button className="nav-link" onClick={() => navigate("/")}>
+          ⬅ 
+        </button>
+      </nav>
+
       <div className="product-detail">
         <div className="image-section">
           {product.image ? (
@@ -68,17 +73,13 @@ const ProductDetails = () => {
           <p><strong>Price:</strong> ₹{product.price}</p>
 
           <div className="actions">
-            <button className="update-btn" onClick={handleUpdate}>UPDATE</button>
-            <button className="delete-btn" onClick={handleDelete}>DELETE</button>
+            <button className="add-btn" onClick={handleAddToCart}>Add to Cart</button>
+            <button className="buy-btn" onClick={handleBuyNow}>Buy Now</button>
           </div>
         </div>
-      </div>
-
-      <div className="back-button-container">
-        <button className="back-button" onClick={() => navigate("/")}>←</button>
       </div>
     </div>
   );
 };
 
-export default ProductDetails;
+export default UserProductDetails;

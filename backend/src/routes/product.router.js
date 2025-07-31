@@ -4,21 +4,20 @@ const multer = require("multer");
 const ImageKit = require("imagekit");
 const router = express.Router();
 
-// Setup Multer for file uploads in memory
+// Setup Multer for in-memory file uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// ImageKit config — make sure keys are correct and secret keys are never exposed publicly
-const imagekit = new ImageKit({
-  publicKey: "public_pLadTxKfr4W3ntpIjIezmjVvYTA=",
-  privateKey: "private_sTJEmkbnIX2Ysj3+Lhb0bLwGMW8=",
-  urlEndpoint: "https://ik.imagekit.io/pxkhoaxnr",
-});
-
-// CREATE new product with image upload
+// CREATE a new product with image upload
 router.post("/add", upload.single("image"), async (req, res) => {
   try {
     const { title, category, price, description } = req.body;
+    const imagekit = new ImageKit({
+      publicKey: process.env.PUBLIC_KEY,
+      privateKey: process.env.PRIVATE_KEY,
+      urlEndpoint: process.env.URIENDPOINT,
+    });
+
     const uploadedImage = await imagekit.upload({
       file: req.file.buffer,
       fileName: req.file.originalname,
@@ -50,7 +49,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// READ product by ID
+// READ a single product by ID
 router.get("/:id", async (req, res) => {
   try {
     const product = await productModel.findById(req.params.id);
@@ -61,12 +60,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// UPDATE product by ID, optional new image upload
+// UPDATE product by ID with optional image update
 router.put("/:id", upload.single("image"), async (req, res) => {
   try {
+    const imagekit = new ImageKit({
+      publicKey: process.env.PUBLIC_KEY,
+      privateKey: process.env.PRIVATE_KEY,
+      urlEndpoint: process.env.URIENDPOINT,
+    });
     const { title, category, price, description } = req.body;
     const updatedData = { title, category, price, description };
 
+    // ✅ Handle new image if uploaded
     if (req.file) {
       const uploadedImage = await imagekit.upload({
         file: req.file.buffer,
@@ -75,7 +80,12 @@ router.put("/:id", upload.single("image"), async (req, res) => {
       updatedData.image = uploadedImage.url;
     }
 
-    const updated = await productModel.findByIdAndUpdate(req.params.id, updatedData, { new: true });
+    const updated = await productModel.findByIdAndUpdate(
+      req.params.id,
+      updatedData,
+      { new: true }
+    );
+
     if (!updated) return res.status(404).json({ error: "Product not found" });
 
     res.json({ message: "Product updated", updated });
@@ -85,7 +95,7 @@ router.put("/:id", upload.single("image"), async (req, res) => {
   }
 });
 
-// DELETE product by ID
+// DELETE a product by ID
 router.delete("/:id", async (req, res) => {
   try {
     const deleted = await productModel.findByIdAndDelete(req.params.id);

@@ -50,7 +50,7 @@ const ProductForm = () => {
 
   return (
     <div className="form-container">
-      <h1>ADD NEW PLAYER</h1>
+      <h1>ADD NEW PRODUCT</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <label htmlFor="title">Title</label>
         <input
@@ -108,7 +108,7 @@ const ProductForm = () => {
           required
         />
 
-        <button type="submit">Add Player</button>
+        <button type="submit">Add Product</button>
       </form>
     </div>
   );

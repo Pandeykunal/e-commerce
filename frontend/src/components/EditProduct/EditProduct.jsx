@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './EditProduct.css';
 
 const EditProduct = () => {
-  const { id } = useParams(); // product ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
@@ -19,7 +19,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/products/${id}`) // <-- fixed URL
+      .get(`http://localhost:5000/api/products/${id}`)
       .then((res) => {
         setProduct(res.data);
         setFormData({
@@ -48,7 +48,7 @@ const EditProduct = () => {
     e.preventDefault();
     const updatedFormData = new FormData();
     updatedFormData.append('title', formData.title);
-    updatedFormData.append('description', formData.description); // <-- added description
+    updatedFormData.append('description', formData.description);
     updatedFormData.append('category', formData.category);
     updatedFormData.append('price', formData.price);
     if (formData.image) {
@@ -56,8 +56,8 @@ const EditProduct = () => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/products/${id}`, updatedFormData); // <-- fixed URL
-      navigate(`/product/${id}`); // <-- fixed navigation route
+      await axios.put(`http://localhost:5000/api/products/${id}`, updatedFormData);
+      navigate(`/product/${id}`);
     } catch (err) {
       console.error('Error updating product:', err);
       alert('Failed to update product. Please try again.');
@@ -68,12 +68,6 @@ const EditProduct = () => {
 
   return (
     <>
-      <nav>
-        <button className="nav-link" onClick={() => navigate("/")}>
-          ⬅ Back to Home
-        </button>
-      </nav>
-
       <div className="form-container">
         <h1>Update Product</h1>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -147,6 +141,13 @@ const EditProduct = () => {
             <button type="submit">Update Product</button>
           </div>
         </form>
+      </div>
+
+      {/* Back button at bottom-left */}
+      <div className="back-button-container">
+        <button className="back-button" onClick={() => navigate("/")}>
+          ←
+        </button>
       </div>
     </>
   );

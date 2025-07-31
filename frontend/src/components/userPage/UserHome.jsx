@@ -1,41 +1,39 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./Home.css";
+import "../Home/Home.css"; // reuse existing styles
 
-const Home = () => {
+const UserHome = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProducts = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/products");
         setProducts(res.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Failed to fetch products:", error);
       }
     };
 
-    fetchData();
+    fetchProducts();
   }, []);
 
   return (
     <div className="home-container">
+      
+
       <div className="product-list">
         {products.map((product) => (
           <Link
             to={`/product/${product._id}`}
-            className="product-card"
             key={product._id}
+            className="product-card"
           >
             <img src={product.image} alt={product.title} />
             <h3>{product.title}</h3>
-            <p>
-              <strong>Category:</strong> {product.category}
-            </p>
-            <p>
-              <strong>Price:</strong> ₹{product.price}
-            </p>
+            <p><strong>Category:</strong> {product.category}</p>
+            <p><strong>Price:</strong> ₹{product.price}</p>
           </Link>
         ))}
       </div>
@@ -43,4 +41,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UserHome;

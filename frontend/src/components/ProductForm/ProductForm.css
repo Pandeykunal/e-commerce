@@ -1,57 +1,120 @@
-.form-container {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 30px;
-  border-radius: 15px;
-  background-color: #f4f4f4;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Body Styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f0f5;
+  padding: 40px;
 }
 
+/* Navigation */
+nav {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #2980b9;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Form Container */
+.form-container {
+  width: 90%;
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 24px;
+  border-radius: 12px;
+  background-color: #e8f0fe; /* Light blue background */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading inside Form */
 .form-container h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  color: #1a237e; /* Deep blue */
+  font-size: 22px;
 }
 
+/* Form Labels */
 form label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: 600;
-  color: #555;
+  color: #333;
+  font-size: 14px;
 }
 
+/* Input Fields */
 form input[type="text"],
 form input[type="number"],
-form input[type="file"] {
+form input[type="file"],
+textarea {
   width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 18px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 14px;
+  border: 1px solid #b0bec5;
+  border-radius: 6px;
   font-size: 14px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
   box-sizing: border-box;
 }
 
-form button {
+/* Input Focus */
+form input:focus,
+textarea:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+/* Textarea Specific */
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Add Product Button (Now Indigo) */
+form button,
+button {
+  margin-top: 20px;
   width: 100%;
   padding: 12px;
-  background-color: #4caf50;
-  border: none;
+  background-color: #3f51b5; /* Indigo */
   color: white;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 8px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-form button:hover {
-  background-color: #45a049;
+form button:hover,
+button:hover {
+  background-color: #303f9f; /* Darker indigo on hover */
+  transform: translateY(-2px);
 }
 
-@media (max-width: 600px) {
+/* Images */
+img {
+  margin-top: 10px;
+  border-radius: 5px;
+  max-width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
   .form-container {
+    margin: 40px 20px;
     padding: 20px;
-    margin: 20px;
   }
 }
