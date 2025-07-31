@@ -9,7 +9,9 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors()); // ✅ Allow cross-origin requests from frontend
+app.use(cors({
+    origin:" "       // url of frontend server",
+})); // ✅ Allow cross-origin requests from frontend
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
