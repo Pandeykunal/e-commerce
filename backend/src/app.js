@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-console.log(process.env.MONGODB_URI)
+console.log(process.env.MONGO_URI)
 
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
