@@ -15,7 +15,7 @@ const UserProductDetails = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
         setProduct(res.data);
         setLoading(false);
       } catch (err) {
@@ -29,8 +29,8 @@ const UserProductDetails = () => {
 
   const handleAddToCart = async () => {
     try {
-      const userId = "shubh001"; // 🔁 Hardcoded for now
-      await axios.post("http://localhost:5000/api/cart/add", {
+      const userId = "shubh001"; // Replace this with dynamic user logic later
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
         userId,
         productId: product._id,
       });
@@ -53,7 +53,7 @@ const UserProductDetails = () => {
     <div>
       <nav>
         <button className="nav-link" onClick={() => navigate("/")}>
-          ⬅ 
+          ⬅
         </button>
       </nav>
 

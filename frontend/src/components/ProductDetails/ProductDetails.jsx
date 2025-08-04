@@ -15,7 +15,7 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
         setProduct(res.data);
         setLoading(false);
       } catch (err) {
@@ -32,7 +32,7 @@ const ProductDetails = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
       alert("Product deleted successfully");
       navigate("/"); // Redirect to home after deletion
     } catch (err) {
@@ -42,9 +42,8 @@ const ProductDetails = () => {
   };
 
   const handleUpdate = () => {
-  navigate(`/product/edit/${id}`); // ✅ match this with App.jsx
-};
-
+    navigate(`/product/edit/${id}`); // ✅ match this with App.jsx
+  };
 
   if (loading) return <p>Loading product details...</p>;
   if (error) return <p>{error}</p>;
