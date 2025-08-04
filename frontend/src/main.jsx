@@ -1,13 +1,15 @@
+// main.jsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import AppUser from './AppUser.jsx';
+
+import MainApp from './MainApp'; // ✅ Replace AppUser with MainApp
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AppUser />
+      <MainApp />
     </BrowserRouter>
   </StrictMode>
-); 
+);
