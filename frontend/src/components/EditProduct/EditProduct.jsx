@@ -19,7 +19,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/products/${id}`)
+      .get(`${import.meta.env.VITE_API_URL}/api/products/${id}`)
       .then((res) => {
         setProduct(res.data);
         setFormData({
@@ -56,7 +56,7 @@ const EditProduct = () => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/products/${id}`, updatedFormData);
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/products/${id}`, updatedFormData);
       navigate(`/product/${id}`);
     } catch (err) {
       console.error('Error updating product:', err);
